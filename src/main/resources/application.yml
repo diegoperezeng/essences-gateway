@@ -1,0 +1,44 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    group: boticario
+    name: boticario-essences-gateway
+  cache:
+    type: caffeine
+    caffeine:
+      spec: maximumSize=1000,expireAfterWrite=30m
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
+
+resilience4j:
+  ratelimiter:
+    instances:
+      essences-api:
+        limitForPeriod: 5
+        limitRefreshPeriod: 1m
+        timeoutDuration: 0
+
+logging:
+  level:
+    org.springframework: TRACE
+    com.boticario: DEBUG
+
+essences:
+  basic:
+    user: xmrGmb7PWFwSzzx6TBxxEGyA7n9zGaC7UWs6GWMruGZMGMNG
+    password: 0y1GaVyJ6szGu7O3dR2Ax8ijucQujxkUZs6Y715MiQ5hhLiEi6NAbfMJGHqpad96
+  client:
+    url: https://api.dev.boticario.com.br/v1/essences-challenge
+    name: essencesClient
+
+users:
+  mock:
+    nameCrypto: $2y$10$So4jucb38w6AHU2lOgy7ZuaZfGJKYfkjzXYjj4uKwgzbmR0aXo9T.
+    passwordCrypto: $2y$10$5o/eymU9d7ku6Hoak5tet.0ejhMqPmDX7Xb6nQIDkXbZyu8ND2sMe
